@@ -25,11 +25,4 @@ jobs:
     uses: neongeckocom/.github/.github/workflows/skill_test_intents.yml@master
     with:
       neon_versions: '[3.9, "3.10", "3.11"]'
-      ovos_versions: ""
-  test-resources:
-    uses: openvoiceos/.github/.github/workflows/skill_test_resources.yml@feat/shared_actions1
-    with:
-      action_branch: feat/shared_actions1
-      pip_packages: pytest-cov
-      intent_testfile: test/test_intents.yaml
-      python_matrix: '[3.9, "3.10", "3.11"]'
+      ovos_versions: '[3.9, "3.10", "3.11"]'
