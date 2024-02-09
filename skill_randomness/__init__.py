@@ -1,4 +1,5 @@
 """A skill for all kinds of chance - make a choice, roll a die, flip a coin, etc."""
+from curses.ascii import isalnum
 from icepool import Die
 from ovos_bus_client.message import Message
 from ovos_utils import classproperty
@@ -44,13 +45,17 @@ class RandomnessSkill(OVOSSkill):
     @intent_handler("pick-a-number.intent")
     def handle_pick_a_number(self, message: Message):
         """Pick a number between two numbers."""
-        lower_bound = message.data.get("lower")
-        upper_bound = message.data.get("upper")
+        lower_bound = message.data.get("lower", "")
+        upper_bound = message.data.get("upper", "")
+        if not lower_bound.isdigit() or not upper_bound.isdigit():
+            lower_bound = 1
+            upper_bound = 10
+            self.speak_dialog("number-range-not-specified")
         if not lower_bound or not upper_bound:
             lower_bound = 1
             upper_bound = 10
             self.speak_dialog("number-range-not-specified")
-        result = Die(range(lower_bound, upper_bound + 1)).sample()
+        result = Die(range(int(lower_bound), int(upper_bound) + 1)).sample()
         self.speak_dialog("number-result", data={"number": result})
         if self.gui:
             self.gui.show_text(result)
