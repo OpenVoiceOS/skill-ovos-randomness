@@ -15,18 +15,19 @@ jobs:
     permissions:
       contents: read
     uses: neongeckocom/.github/.github/workflows/skill_tests.yml@master
+    with:
+      neon_versions: '[3.9, "3.10", "3.11"]'
+      ovos_versions: '[3.9, "3.10", "3.11"]'
   skill_intent_tests:
     name: skill_intent_tests
     permissions:
       contents: read
     uses: neongeckocom/.github/.github/workflows/skill_test_intents.yml@master
+    with:
+      neon_versions: '[3.9, "3.10", "3.11"]'
+      ovos_versions: '[3.9, "3.10", "3.11"]'
   skill_resource_tests:
     name: skill_resource_tests
     permissions:
       contents: read
     uses: neongeckocom/.github/.github/workflows/skill_test_resources.yml@master
-  skill_install_tests:
-    name: skill_install_tests
-    permissions:
-      contents: read
-    uses: neongeckocom/.github/.github/workflows/skill_test_installation.yml@master
