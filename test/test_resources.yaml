@@ -16,6 +16,6 @@ intents:
     - roll-dice.intent
     - make-a-choice.intent
     - pick-a-number.intent
+  adapt: []
 vocab: []
-adapt: []
 regex: []
