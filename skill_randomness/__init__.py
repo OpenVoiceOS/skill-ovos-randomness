@@ -1,6 +1,5 @@
 """A skill for all kinds of chance - make a choice, roll a die, flip a coin, etc."""
-from curses.ascii import isalnum
-from icepool import Die
+from icepool import Die, Pool
 from ovos_bus_client.message import Message
 from ovos_utils import classproperty
 from ovos_utils.process_utils import RuntimeRequirements
@@ -96,10 +95,13 @@ class RandomnessSkill(OVOSSkill):
         self.play_audio("die-roll.wav")
         number = message.data.get("number", "1")  # TODO: Validate if we get a number or written number
         faces = message.data.get("faces", "6")
-        result = Die(number @ f"d{faces}").sample()
+        if not number.isdigit() or not faces.isdigit():
+            self.speak_dialog("unclear-dice", {"guess": f"{number} d {faces}"})
+            return
+        result = Pool(Die(range(1, faces + 1))).sum()
         self.speak_dialog("die-result", data={"result": result})
         if self.gui:
-            self.gui.show_text(result)
+            self.gui.show_text(str(result))
         if self.enclosure:
             self.enclosure.eyes_spin()
-            self.enclosure.mouth_text(result)
+            self.enclosure.mouth_text(str(result))
