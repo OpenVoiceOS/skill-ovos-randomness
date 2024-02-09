@@ -66,7 +66,7 @@ class RandomnessSkill(OVOSSkill):
     @intent_handler("flip-a-coin.intent")
     def handle_flip_a_coin(self, message: Message):  # pylint: disable=unused-argument
         """Flip a coin."""
-        self.play_audio("coin-flip.wav")
+        self.play_audio("coin-flip.wav", instant=True)
         result = Die(["heads", "tails"]).sample()
         self.speak_dialog("coin-result", data={"result": result})
         if self.gui:
@@ -78,7 +78,8 @@ class RandomnessSkill(OVOSSkill):
     @intent_handler("fortune-teller.intent")
     def handle_fortune_teller(self, message: Message):  # pylint: disable=unused-argument
         """Get a random fortune."""
-        self.play_audio("magic.mp3")
+        self.pl
+        self.play_audio("magic.mp3", instant=True)
         fortune = self.get_response("fortune-query")
         answer = Die(["yes", "no"]).sample()
         self.speak_dialog("fortune-result", {"answer": answer})
@@ -92,7 +93,7 @@ class RandomnessSkill(OVOSSkill):
     @intent_handler("roll-dice.intent")
     def handle_roll_dice(self, message: Message):
         """Roll a die."""
-        self.play_audio("die-roll.wav")
+        self.play_audio("die-roll.wav", instant=True)
         number = message.data.get("number", "1")  # TODO: Validate if we get a number or written number
         faces = message.data.get("faces", "6")
         if not number.isdigit() or not faces.isdigit():
