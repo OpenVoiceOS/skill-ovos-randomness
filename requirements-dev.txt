@@ -1,2 +1,3 @@
 pytest
 ovos-plugin-manager
+padacioso

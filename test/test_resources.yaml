@@ -1,0 +1,18 @@
+languages:
+  - "en-us"
+dialog:
+  - fortune-result
+  - choice-result
+  - fortune-query
+  - number-result
+  - first-choice
+  - second-choice
+  - coin-result
+  - number-range-not-specified
+intents:
+  padatious:
+    - fortune-teller.intent
+    - flip-a-coin.intent
+    - roll-dice.intent
+    - make-a-choice.intent
+    - pick-a-number.intent

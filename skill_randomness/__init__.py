@@ -42,7 +42,7 @@ class RandomnessSkill(OVOSSkill):
             self.enclosure.eyes_blink(2)
             self.enclosure.mouth_text(result)
 
-    @intent_handler("pick-a-number.intent")
+    @intent_handler("pick-a-number.intent")  # TODO: Fix buffer overflow issue
     def handle_pick_a_number(self, message: Message):
         """Pick a number between two numbers."""
         lower_bound = message.data.get("lower", "")
