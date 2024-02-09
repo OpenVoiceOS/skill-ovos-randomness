@@ -11,6 +11,7 @@ A skill for all kinds of chance - make a choice, roll a die, flip a coin, pick b
 - "Help me decide something"
 - "Pick a number between 1 and 100"
 - "Roll a d20"
+- "Roll 8d6"
 
 ## Credits
 
