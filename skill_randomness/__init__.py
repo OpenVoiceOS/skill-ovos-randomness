@@ -71,7 +71,7 @@ class RandomnessSkill(OVOSSkill):
             self.enclosure.system_blink(3)
             self.enclosure.mouth_text(result)
 
-    @intent_handler("fortune-teller")
+    @intent_handler("fortune-teller.intent")
     def handle_fortune_teller(self, message: Message):  # pylint: disable=unused-argument
         """Get a random fortune."""
         self.play_audio("magic.mp3")
