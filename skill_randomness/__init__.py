@@ -78,7 +78,6 @@ class RandomnessSkill(OVOSSkill):
     @intent_handler("fortune-teller.intent")
     def handle_fortune_teller(self, message: Message):  # pylint: disable=unused-argument
         """Get a random fortune."""
-        self.pl
         self.play_audio("magic.mp3", instant=True)
         fortune = self.get_response("fortune-query")
         answer = Die(["yes", "no"]).sample()
