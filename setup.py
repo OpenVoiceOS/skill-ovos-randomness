@@ -49,7 +49,7 @@ def get_requirements(requirements_filename: str):
 
 def find_resource_files():
     resource_base_dirs = ("locale", "intents", "dialog", "vocab", "regex", "ui")
-    package_data = ["*.json"]
+    package_data = ["*.json", "*.wav", "*.mp3"]
     for res in resource_base_dirs:
         if path.isdir(path.join(BASE_PATH, res)):
             for directory, _, files in walk(path.join(BASE_PATH, res)):
