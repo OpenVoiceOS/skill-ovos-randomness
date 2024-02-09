@@ -3,8 +3,8 @@ from setuptools import setup
 from os import walk, path
 
 BASEDIR = path.abspath(path.dirname(__file__))
-URL = "TODO: Add 'repositoryUrl' to .projenrc.json and run pj"
-SKILL_CLAZZ = "TODO: Add 'skillClass' to .projenrc.json and run pj"  # needs to match __init__.py class name
+URL = "https://github.com/mikejgray/skill-randomness"
+SKILL_CLAZZ = "RandomnessSkill"  # needs to match __init__.py class name
 PYPI_NAME = "skill-randomness"  # pip install PYPI_NAME
 
 # below derived from github url to ensure standard skill_id
@@ -12,7 +12,7 @@ SKILL_AUTHOR, SKILL_NAME = URL.split(".com/")[-1].split("/")
 SKILL_PKG = SKILL_NAME.lower().replace("-", "_")
 PLUGIN_ENTRY_POINT = f"{SKILL_NAME.lower()}.{SKILL_AUTHOR.lower()}={SKILL_PKG}:{SKILL_CLAZZ}"
 # skill_id=package_name:SkillClass
-BASE_PATH = BASE_PATH = path.abspath(path.join(path.dirname(__file__), "src"))
+BASE_PATH = BASE_PATH = path.abspath(path.join(path.dirname(__file__), "skill_randomness"))
 
 
 def get_version():
@@ -68,14 +68,15 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url=URL,
-    author="TODO: Add 'author' to .projenrc.json and run pj",
-    author_email="TODO: Add 'authorAddress' to .projenrc.json and run pj",
-    license="# TODO: Add 'license' to .projenrc.json and run pj",
-    package_dir={SKILL_PKG: "src"},
+    author="Mike Gray",
+    author_email="mike@graywind.org",
+    license="MIT",
+    package_dir={SKILL_PKG: "skill_randomness"},
     package_data={SKILL_PKG: find_resource_files()},
     packages=[SKILL_PKG],
     include_package_data=True,
     install_requires=get_requirements("requirements.txt"),
     keywords="ovos skill voice assistant",
     entry_points={"ovos.plugin.skill": PLUGIN_ENTRY_POINT},
+    extras={"test": get_requirements("requirements-dev.txt")},
 )
