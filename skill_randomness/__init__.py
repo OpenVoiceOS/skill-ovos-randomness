@@ -36,7 +36,10 @@ class RandomnessSkill(OVOSSkill):
         """Decide between two things."""
         first_choice = self.get_response("first-choice") or "the first one"
         second_choice = self.get_response("second-choice") or "the second one"
-        result = Die([first_choice, second_choice]).sample()
+        try:
+            result = Die([first_choice, second_choice]).sample()
+        except TypeError:
+            result = Die(first_choice, second_choice).sample()
         self.speak_dialog("choice-result", data={"choice": result})
         if self.gui:
             self.gui.show_text(result)
@@ -70,7 +73,10 @@ class RandomnessSkill(OVOSSkill):
     def handle_flip_a_coin(self, message: Message):  # pylint: disable=unused-argument
         """Flip a coin."""
         self.play_audio(f"{dirname(__file__)}/coin-flip.wav")
-        result = Die(["heads", "tails"]).sample()
+        try:
+            result = Die(["heads", "tails"]).sample()
+        except TypeError:
+            result = Die("heads", "tails").sample()
         self.speak_dialog("coin-result", data={"result": result})
         if self.gui:
             self.gui.show_text(result)
@@ -83,7 +89,10 @@ class RandomnessSkill(OVOSSkill):
         """Get a random fortune."""
         self.play_audio(f"{dirname(__file__)}/magic.mp3")
         fortune = self.get_response("fortune-query")
-        answer = Die(["yes", "no"]).sample()
+        try:
+            answer = Die(["yes", "no"]).sample()
+        except TypeError:
+            answer = Die("yes", "no").sample()
         self.speak_dialog("fortune-result", {"answer": answer})
         fortune_with_answer = f"{fortune}? ...{answer}"
         if self.gui:
