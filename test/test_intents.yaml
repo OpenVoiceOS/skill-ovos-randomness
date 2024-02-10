@@ -33,26 +33,13 @@ en-us:
   flip-a-coin.intent:
     - flip a coin
   roll-dice.intent:
-    - roll a d20 sided die:
-        - faces: 20
-    - roll a d12 die:
-        - faces: 12
-    - roll a d8 dice:
-        - faces: 8
-    - roll a d4:
-        - faces: 4
-    - roll a 2d6 sided die:
-        - number: 2
-        - faces: 6
-    - roll a 2d10 die:
-        - number: 2
-        - faces: 10
-    - roll a 1d30 dice:
-        - number: 1
-        - faces: 30
-    - roll a 8d6:
-        - number: 8
-        - faces: 6
+    - roll a 20 sided die:
+        - faces: "20"
+    - roll a 20 sided dice:
+        - faces: "20"
+    - roll 1d20:
+        - number: "1"
+        - faces: "20"
   make-a-choice.intent:
     - help me make a choice
     - help me decide something
@@ -61,11 +48,10 @@ en-us:
         - lower: one
         - upper: one hundred
     - select a number between 3 and 7:
-        - lower: 3
-        - upper: 7
+        - lower: "3"
+        - upper: "7"
     - pick a number between 20 and 21:
-        - lower: 20
-        - upper: 21
+        - lower: "20"
+        - upper: "21"
 # unmatched intents:
 #       en-us:
-#             -

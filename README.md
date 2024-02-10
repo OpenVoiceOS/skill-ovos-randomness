@@ -1,5 +1,10 @@
 # skill-randomness
 
+![Python](https://img.shields.io/badge/python-3.8-blue.svg)
+![Python](https://img.shields.io/badge/python-3.9-blue.svg)
+![Python](https://img.shields.io/badge/python-3.10-blue.svg)
+![Python](https://img.shields.io/badge/python-3.11-blue.svg)
+
 ## About
 
 A skill for all kinds of chance - make a choice, roll a die, flip a coin, pick between two choices, etc.
@@ -10,7 +15,9 @@ A skill for all kinds of chance - make a choice, roll a die, flip a coin, pick b
 - "Tell me my future"
 - "Help me decide something"
 - "Pick a number between 1 and 100"
-- "Roll a d20"
+- "Roll 1d20"
+- "Roll 8d6"
+- "Roll a 20 sided die"
 
 ## Credits
 

@@ -3,14 +3,12 @@ import shutil
 from json import dumps
 from os import environ, getenv, makedirs
 from os.path import join, dirname, isdir
-from threading import Event
 from unittest.mock import Mock
 import pytest
 from ovos_plugin_manager.skills import find_skill_plugins
 from ovos_utils.fakebus import FakeBus
 
 from skill_randomness import RandomnessSkill
-# TODO: Mock settings path, set up fixtures
 
 
 @pytest.fixture(scope="session")

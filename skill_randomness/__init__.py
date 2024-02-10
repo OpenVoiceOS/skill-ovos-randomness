@@ -1,5 +1,7 @@
 """A skill for all kinds of chance - make a choice, roll a die, flip a coin, etc."""
-from curses.ascii import isalnum
+from os.path import dirname
+from random import randint
+
 from icepool import Die
 from ovos_bus_client.message import Message
 from ovos_utils import classproperty
@@ -10,7 +12,7 @@ from ovos_workshop.skills import OVOSSkill
 
 class RandomnessSkill(OVOSSkill):
     """A skill for all kinds of chance - make a choice, roll a die, flip a coin, etc."""
-    def __init__(self, *args, bus=None, skill_id="", **kwargs):
+    def __init__(self, *args, bus=None, skill_id='', **kwargs):
         super().__init__(*args, bus=bus, skill_id=skill_id, **kwargs)
 
     @classproperty
@@ -34,7 +36,10 @@ class RandomnessSkill(OVOSSkill):
         """Decide between two things."""
         first_choice = self.get_response("first-choice") or "the first one"
         second_choice = self.get_response("second-choice") or "the second one"
-        result = Die([first_choice, second_choice]).sample()
+        try:
+            result = Die([first_choice, second_choice]).sample()
+        except TypeError:
+            result = Die(first_choice, second_choice).sample()
         self.speak_dialog("choice-result", data={"choice": result})
         if self.gui:
             self.gui.show_text(result)
@@ -42,33 +47,35 @@ class RandomnessSkill(OVOSSkill):
             self.enclosure.eyes_blink(2)
             self.enclosure.mouth_text(result)
 
-    @intent_handler("pick-a-number.intent")  # TODO: Fix buffer overflow issue
+    @intent_handler("pick-a-number.intent")
     def handle_pick_a_number(self, message: Message):
         """Pick a number between two numbers."""
         lower_bound = message.data.get("lower", "")
         upper_bound = message.data.get("upper", "")
-        if not lower_bound.isdigit() or not upper_bound.isdigit():
+        self.log.debug(f"Lower: {lower_bound}, Upper: {upper_bound}")
+        try:
+            upper_bound = round(float(upper_bound))
+            lower_bound = round(float(lower_bound))
+        except ValueError:
             lower_bound = 1
             upper_bound = 10
             self.speak_dialog("number-range-not-specified")
-        if not lower_bound or not upper_bound:
-            lower_bound = 1
-            upper_bound = 10
-            self.speak_dialog("number-range-not-specified")
-        result = Die(range(int(lower_bound), int(upper_bound) + 1)).sample()
+        result = randint(lower_bound, upper_bound)
         self.speak_dialog("number-result", data={"number": result})
         if self.gui:
-            self.gui.show_text(result)
+            self.gui.show_text(str(result))
         if self.enclosure:
-            self.enclosure.eyes_look("left")
-            self.enclosure.mouth_text(result)
-            self.enclosure.eyes_look("right")
+            self.enclosure.eyes_spin()
+            self.enclosure.mouth_text(str(result))
 
     @intent_handler("flip-a-coin.intent")
     def handle_flip_a_coin(self, message: Message):  # pylint: disable=unused-argument
         """Flip a coin."""
-        self.play_audio("coin-flip.wav")
-        result = Die(["heads", "tails"]).sample()
+        self.play_audio(f"{dirname(__file__)}/coin-flip.wav")
+        try:
+            result = Die(["heads", "tails"]).sample()
+        except TypeError:
+            result = Die("heads", "tails").sample()
         self.speak_dialog("coin-result", data={"result": result})
         if self.gui:
             self.gui.show_text(result)
@@ -79,9 +86,12 @@ class RandomnessSkill(OVOSSkill):
     @intent_handler("fortune-teller.intent")
     def handle_fortune_teller(self, message: Message):  # pylint: disable=unused-argument
         """Get a random fortune."""
-        self.play_audio("magic.mp3")
+        self.play_audio(f"{dirname(__file__)}/magic.mp3")
         fortune = self.get_response("fortune-query")
-        answer = Die(["yes", "no"]).sample()
+        try:
+            answer = Die(["yes", "no"]).sample()
+        except TypeError:
+            answer = Die("yes", "no").sample()
         self.speak_dialog("fortune-result", {"answer": answer})
         fortune_with_answer = f"{fortune}? ...{answer}"
         if self.gui:
@@ -93,13 +103,22 @@ class RandomnessSkill(OVOSSkill):
     @intent_handler("roll-dice.intent")
     def handle_roll_dice(self, message: Message):
         """Roll a die."""
-        self.play_audio("die-roll.wav")
-        number = message.data.get("number", "1")  # TODO: Validate if we get a number or written number
+        self.log.debug(f"Message: {message.serialize()}")
+        self.play_audio(f"{dirname(__file__)}/die-roll.wav")
+        self.log.debug(f"Rolling a die with {message.data.get('number')}d{message.data.get('faces')}")
+        number = message.data.get("number", "1")
         faces = message.data.get("faces", "6")
-        result = Die(number @ f"d{faces}").sample()
+        if not number.isdigit() or not faces.isdigit():
+            self.speak_dialog("unclear-dice", {"guess": f"{number} d {faces}"})
+            if self.gui:
+                self.gui.show_text(f"I heard: {number}d{faces}")
+            return
+        result = 0
+        for _ in range(1, int(number) + 1):
+            result += Die(range(1, int(faces) + 1)).sample()
         self.speak_dialog("die-result", data={"result": result})
         if self.gui:
-            self.gui.show_text(result)
+            self.gui.show_text(str(result))
         if self.enclosure:
             self.enclosure.eyes_spin()
-            self.enclosure.mouth_text(result)
+            self.enclosure.mouth_text(str(result))
