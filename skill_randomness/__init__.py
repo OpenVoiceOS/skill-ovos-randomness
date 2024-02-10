@@ -92,13 +92,19 @@ class RandomnessSkill(OVOSSkill):  # TODO: Figure out why sounds aren't playing
     @intent_handler("roll-dice.intent")
     def handle_roll_dice(self, message: Message):
         """Roll a die."""
+        self.log.debug(f"Message: {message.serialize()}")
         self.play_audio("die-roll.wav", instant=True)
-        number = message.data.get("number", "1")  # TODO: Validate if we get a number or written number
+        self.log.debug(f"Rolling a die with {message.data.get('number')}d{message.data.get('faces')}")
+        number = message.data.get("number", "1")
         faces = message.data.get("faces", "6")
         if not number.isdigit() or not faces.isdigit():
             self.speak_dialog("unclear-dice", {"guess": f"{number} d {faces}"})
+            if self.gui:
+                self.gui.show_text(f"I heard: {number}d{faces}")
             return
-        result = Pool(Die(range(1, faces + 1))).sum()
+        result = 0
+        for _ in range(1, int(number) + 1):
+            result += Die(range(1, int(faces) + 1)).sample()
         self.speak_dialog("die-result", data={"result": result})
         if self.gui:
             self.gui.show_text(str(result))

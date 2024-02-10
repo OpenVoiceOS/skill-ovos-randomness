@@ -36,9 +36,9 @@ en-us:
         - roll 1d20:
               - number: "1"
               - faces: "20"
-        - roll a d20 sided die:
+        - roll a 20 sided die:
               - faces: "20"
-        - roll a d20 sided dice:
+        - roll a 20 sided dice:
               - faces: "20"
     make-a-choice.intent:
         - help me make a choice
