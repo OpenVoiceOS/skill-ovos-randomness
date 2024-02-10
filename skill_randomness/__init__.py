@@ -2,7 +2,7 @@
 from os.path import dirname
 from random import randint
 
-from icepool import Die, d6
+from icepool import Die, d6, d
 from ovos_bus_client.message import Message
 from ovos_workshop.decorators import intent_handler
 from ovos_workshop.skills import OVOSSkill
@@ -76,16 +76,20 @@ class RandomnessSkill(OVOSSkill):
         """Roll a die."""
         self.log.debug(f"Roll dice message: {message.serialize()}")
         self.play_audio(f"{dirname(__file__)}/die-roll.wav")
-        number = message.data.get("number", "1")
-        faces = message.data.get("faces", "6")
-        self.log.debug(f"Rolling a die with {number}d{faces}")
-        if not number.isdigit() or not faces.isdigit():
-            self.speak_dialog("unclear-dice", {"guess": f"{number} d {faces}"})
-            self.gui.show_text(f"I heard: {number}d{faces}")
-            return
+        number = message.data.get("number", 1)
+        faces = message.data.get("faces", 6)
         result = 0
-        for _ in range(1, int(number) + 1):
-            result += Die(range(1, int(faces) + 1)).sample()
+        if int(number) > 1:
+            self.log.debug(f"rolling {number} dice")
+            result_string = ""
+            for _ in range(1, int(number) + 1):
+                # Create a dialog string
+                r = Die(d(int(faces))).sample()
+                result += r
+                result_string = result_string + ", " + str(r)
+            result = result_string + f" for a total of {result}"
+        else:
+            result = Die(d(int(faces))).sample()
         self.speak_dialog("die-result", data={"result": result})
         self.gui.show_text(str(result))
         self.enclosure.eyes_spin()
