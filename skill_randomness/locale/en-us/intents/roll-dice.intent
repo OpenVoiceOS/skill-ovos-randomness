@@ -1,1 +1,3 @@
-roll a ({number}|)d{faces}( sided die| die| dice|)
+roll {number}d{faces}
+roll a {faces} sided die
+roll a {faces} sided dice

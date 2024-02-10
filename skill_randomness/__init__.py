@@ -7,7 +7,7 @@ from ovos_workshop.decorators import intent_handler
 from ovos_workshop.skills import OVOSSkill
 
 
-class RandomnessSkill(OVOSSkill):
+class RandomnessSkill(OVOSSkill):  # TODO: Figure out why sounds aren't playing
     """A skill for all kinds of chance - make a choice, roll a die, flip a coin, etc."""
     def __init__(self, *args, bus=None, skill_id="", **kwargs):
         super().__init__(*args, bus=bus, skill_id=skill_id, **kwargs)
