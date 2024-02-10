@@ -78,7 +78,7 @@ class RandomnessSkill(OVOSSkill):
         self.play_audio(f"{dirname(__file__)}/die-roll.wav")
         number = message.data.get("number", "1")
         faces = message.data.get("faces", "6")
-        self.log.debug(f"Rolling a die with {number}d{number}")
+        self.log.debug(f"Rolling a die with {number}d{faces}")
         if not number.isdigit() or not faces.isdigit():
             self.speak_dialog("unclear-dice", {"guess": f"{number} d {faces}"})
             self.gui.show_text(f"I heard: {number}d{faces}")
