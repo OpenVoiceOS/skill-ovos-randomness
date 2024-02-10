@@ -65,9 +65,8 @@ class RandomnessSkill(OVOSSkill):
         if self.gui:
             self.gui.show_text(str(result))
         if self.enclosure:
-            self.enclosure.eyes_look("left")
+            self.enclosure.eyes_spin()
             self.enclosure.mouth_text(str(result))
-            self.enclosure.eyes_look("right")
 
     @intent_handler("flip-a-coin.intent")
     def handle_flip_a_coin(self, message: Message):  # pylint: disable=unused-argument
@@ -123,8 +122,3 @@ class RandomnessSkill(OVOSSkill):
         if self.enclosure:
             self.enclosure.eyes_spin()
             self.enclosure.mouth_text(str(result))
-
-if __name__ == "__main__":
-    from ovos_utils.fakebus import FakeBus
-    skill = RandomnessSkill(bus=FakeBus(), skill_id="test")
-    skill.handle_flip_a_coin(None)
