@@ -2,7 +2,7 @@
 from os.path import dirname
 from random import randint
 
-from icepool import Die
+from icepool import Die, d
 from ovos_bus_client.message import Message
 from ovos_utils import classproperty
 from ovos_utils.process_utils import RuntimeRequirements
@@ -106,16 +106,25 @@ class RandomnessSkill(OVOSSkill):
         self.log.debug(f"Message: {message.serialize()}")
         self.play_audio(f"{dirname(__file__)}/die-roll.wav")
         self.log.debug(f"Rolling a die with {message.data.get('number')}d{message.data.get('faces')}")
-        number = message.data.get("number", "1")
-        faces = message.data.get("faces", "6")
-        if not number.isdigit() or not faces.isdigit():
-            self.speak_dialog("unclear-dice", {"guess": f"{number} d {faces}"})
-            if self.gui:
-                self.gui.show_text(f"I heard: {number}d{faces}")
-            return
+        number = message.data.get("number", 1)
+        faces = message.data.get("faces", 6)
+        # if not number.isdigit() or not faces.isdigit():
+        #     self.speak_dialog("unclear-dice", {"guess": f"{number} d {faces}"})
+        #     if self.gui:
+        #         self.gui.show_text(f"I heard: {number}d{faces}")
+        #     return
         result = 0
-        for _ in range(1, int(number) + 1):
-            result += Die(range(1, int(faces) + 1)).sample()
+        if int(number) > 1:
+            self.log.debug(f"rolling {number} dice")
+            result_string = ""
+            for _ in range(1, int(number) + 1):
+                # Create a dialog string
+                r = Die(d(int(faces))).sample()
+                result += r
+                result_string = result_string + ", " + str(r)
+            result = result_string + f" for a total of {result}"
+        else:
+            result = Die(d(int(faces))).sample()
         self.speak_dialog("die-result", data={"result": result})
         if self.gui:
             self.gui.show_text(str(result))
