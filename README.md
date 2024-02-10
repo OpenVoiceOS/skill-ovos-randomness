@@ -1,6 +1,5 @@
 # skill-randomness
 
-![Python](https://img.shields.io/badge/python-3.8-blue.svg)
 ![Python](https://img.shields.io/badge/python-3.9-blue.svg)
 ![Python](https://img.shields.io/badge/python-3.10-blue.svg)
 ![Python](https://img.shields.io/badge/python-3.11-blue.svg)
