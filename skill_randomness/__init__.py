@@ -1,4 +1,5 @@
 """A skill for all kinds of chance - make a choice, roll a die, flip a coin, etc."""
+from os.path import dirname
 from random import randint
 
 from icepool import Die
@@ -11,7 +12,7 @@ from ovos_workshop.skills import OVOSSkill
 
 class RandomnessSkill(OVOSSkill):
     """A skill for all kinds of chance - make a choice, roll a die, flip a coin, etc."""
-    def __init__(self, *args, bus=None, skill_id="", **kwargs):
+    def __init__(self, *args, bus=None, skill_id='', **kwargs):
         super().__init__(*args, bus=bus, skill_id=skill_id, **kwargs)
 
     @classproperty
@@ -68,7 +69,7 @@ class RandomnessSkill(OVOSSkill):
     @intent_handler("flip-a-coin.intent")
     def handle_flip_a_coin(self, message: Message):  # pylint: disable=unused-argument
         """Flip a coin."""
-        self.play_audio("coin-flip.wav", instant=True)
+        self.play_audio(f"{dirname(__file__)}/coin-flip.wav")
         result = Die(["heads", "tails"]).sample()
         self.speak_dialog("coin-result", data={"result": result})
         if self.gui:
@@ -80,7 +81,7 @@ class RandomnessSkill(OVOSSkill):
     @intent_handler("fortune-teller.intent")
     def handle_fortune_teller(self, message: Message):  # pylint: disable=unused-argument
         """Get a random fortune."""
-        self.play_audio("magic.mp3")
+        self.play_audio(f"{dirname(__file__)}/magic.mp3")
         fortune = self.get_response("fortune-query")
         answer = Die(["yes", "no"]).sample()
         self.speak_dialog("fortune-result", {"answer": answer})
@@ -95,7 +96,7 @@ class RandomnessSkill(OVOSSkill):
     def handle_roll_dice(self, message: Message):
         """Roll a die."""
         self.log.debug(f"Message: {message.serialize()}")
-        self.play_audio("die-roll.wav")
+        self.play_audio(f"{dirname(__file__)}/die-roll.wav")
         self.log.debug(f"Rolling a die with {message.data.get('number')}d{message.data.get('faces')}")
         number = message.data.get("number", "1")
         faces = message.data.get("faces", "6")
@@ -113,3 +114,8 @@ class RandomnessSkill(OVOSSkill):
         if self.enclosure:
             self.enclosure.eyes_spin()
             self.enclosure.mouth_text(str(result))
+
+if __name__ == "__main__":
+    from ovos_utils.fakebus import FakeBus
+    skill = RandomnessSkill(bus=FakeBus(), skill_id="test")
+    skill.handle_flip_a_coin(None)
