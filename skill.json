@@ -10,8 +10,8 @@
         "Help me decide something",
         "Pick a number between 1 and 100",
         "Roll a die",
-        "Roll 1d20",
-        "Roll 8d6",
+        "Roll 1 d 20",
+        "Roll 8 d 6",
         "Roll a 20 sided die"
     ],
     "desktopFile": false,
