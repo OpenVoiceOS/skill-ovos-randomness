@@ -86,7 +86,7 @@ class RandomnessSkill(OVOSSkill):
                 # Create a dialog string
                 r = Die(d(int(faces))).sample()
                 result += r
-                result_string = result_string + str(r) + ","
+                result_string = result_string + str(r) + ", "
             result = result_string + f" for a total of {result}"
         else:
             result = Die(d(int(faces))).sample()
