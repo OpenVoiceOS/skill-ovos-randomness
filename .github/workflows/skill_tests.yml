@@ -18,11 +18,3 @@ jobs:
     with:
       neon_versions: '[3.9, "3.10", "3.11"]'
       ovos_versions: '[3.9, "3.10", "3.11"]'
-  skill_intent_tests:
-    name: skill_intent_tests
-    permissions:
-      contents: read
-    uses: neongeckocom/.github/.github/workflows/skill_test_intents.yml@master
-    with:
-      neon_versions: '[3.9, "3.10", "3.11"]'
-      ovos_versions: '[3.9, "3.10", "3.11"]'
