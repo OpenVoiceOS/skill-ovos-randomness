@@ -23,10 +23,3 @@ jobs:
       python_matrix: '[3.9, "3.10", "3.11"]'
       is_skill: true
       # upload_coverage: true # TODO: Once this moves to the OVOS org
-  skill_installation_tests:
-    uses: openvoiceos/.github/.github/workflows/skill_test_installation.yml@feat/shared_actions1
-    with:
-      runner: ubuntu-latest
-      action_branch: feat/shared_actions1
-      skill_id: "skill-randomness.mikejgray" # TODO: Change when it moves to the OVOS org
-      python_matrix: '[3.9, "3.10", "3.11"]'
