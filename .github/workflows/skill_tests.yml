@@ -9,12 +9,20 @@ jobs:
     name: py_build_tests
     permissions:
       contents: read
-    uses: neongeckocom/.github/.github/workflows/python_build_tests.yml@master
+    uses: openvoiceos/.github/.github/workflows/python_build_tests.yml@feat/shared_actions1
   skill_unit_tests:
     name: skill_unit_tests
     permissions:
       contents: read
-    uses: neongeckocom/.github/.github/workflows/skill_tests.yml@master
+    uses: openvoiceos/.github/.github/workflows/pytest_file_or_dir.yml@feat/shared_actions1
     with:
-      neon_versions: '[3.9, "3.10", "3.11"]'
-      ovos_versions: '[3.9, "3.10", "3.11"]'
+      action_branch: feat/shared_actions1
+      test_location: test
+      is_skill: true
+      # upload_coverage: true # TODO: Once this moves to the OVOS org
+  skill_installation_tests:
+    uses: openvoiceos/.github/.github/workflows/skill_test_installation.yml@feat/shared_actions1
+    with:
+      runner: ubuntu-latest
+      action_branch: feat/shared_actions1
+      skill_id: "skill-randomness.miikejgray" # TODO: Change when it moves to the OVOS org
