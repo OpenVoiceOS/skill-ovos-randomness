@@ -1,5 +1,7 @@
 """A skill for all kinds of chance - make a choice, roll a die, flip a coin, etc."""
-from icepool import Die, Pool
+from random import randint
+
+from icepool import Die
 from ovos_bus_client.message import Message
 from ovos_utils import classproperty
 from ovos_utils.process_utils import RuntimeRequirements
@@ -41,20 +43,20 @@ class RandomnessSkill(OVOSSkill):  # TODO: Figure out why sounds aren't playing
             self.enclosure.eyes_blink(2)
             self.enclosure.mouth_text(result)
 
-    @intent_handler("pick-a-number.intent")  # TODO: Fix buffer overflow issue
+    @intent_handler("pick-a-number.intent")
     def handle_pick_a_number(self, message: Message):
         """Pick a number between two numbers."""
         lower_bound = message.data.get("lower", "")
         upper_bound = message.data.get("upper", "")
-        if not lower_bound.isdigit() or not upper_bound.isdigit():
+        self.log.debug(f"Lower: {lower_bound}, Upper: {upper_bound}")
+        try:
+            upper_bound = round(float(upper_bound))
+            lower_bound = round(float(lower_bound))
+        except ValueError:
             lower_bound = 1
             upper_bound = 10
             self.speak_dialog("number-range-not-specified")
-        if not lower_bound or not upper_bound:
-            lower_bound = 1
-            upper_bound = 10
-            self.speak_dialog("number-range-not-specified")
-        result = Die(range(int(lower_bound), int(upper_bound) + 1)).sample()
+        result = randint(lower_bound, upper_bound)
         self.speak_dialog("number-result", data={"number": result})
         if self.gui:
             self.gui.show_text(result)
