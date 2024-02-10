@@ -4,8 +4,6 @@ from random import randint
 
 from icepool import Die, d
 from ovos_bus_client.message import Message
-from ovos_utils import classproperty
-from ovos_utils.process_utils import RuntimeRequirements
 from ovos_workshop.decorators import intent_handler
 from ovos_workshop.skills import OVOSSkill
 
@@ -30,7 +28,6 @@ class RandomnessSkill(OVOSSkill):
             no_gui_fallback=True,
         )
 
-
     @intent_handler("make-a-choice.intent")
     def handle_make_a_choice_intent(self, message: Message):  # pylint: disable=unused-argument
         """Decide between two things."""
@@ -41,11 +38,9 @@ class RandomnessSkill(OVOSSkill):
         except TypeError:
             result = Die(first_choice, second_choice).sample()
         self.speak_dialog("choice-result", data={"choice": result})
-        if self.gui:
-            self.gui.show_text(result)
-        if self.enclosure:
-            self.enclosure.eyes_blink(2)
-            self.enclosure.mouth_text(result)
+        self.gui.show_text(result)
+        self.enclosure.eyes_blink(2)
+        self.enclosure.mouth_text(result)
 
     @intent_handler("pick-a-number.intent")
     def handle_pick_a_number(self, message: Message):
@@ -62,11 +57,9 @@ class RandomnessSkill(OVOSSkill):
             self.speak_dialog("number-range-not-specified")
         result = randint(lower_bound, upper_bound)
         self.speak_dialog("number-result", data={"number": result})
-        if self.gui:
-            self.gui.show_text(str(result))
-        if self.enclosure:
-            self.enclosure.eyes_spin()
-            self.enclosure.mouth_text(str(result))
+        self.gui.show_text(str(result))
+        self.enclosure.eyes_spin()
+        self.enclosure.mouth_text(str(result))
 
     @intent_handler("flip-a-coin.intent")
     def handle_flip_a_coin(self, message: Message):  # pylint: disable=unused-argument
@@ -77,11 +70,9 @@ class RandomnessSkill(OVOSSkill):
         except TypeError:
             result = Die("heads", "tails").sample()
         self.speak_dialog("coin-result", data={"result": result})
-        if self.gui:
-            self.gui.show_text(result)
-        if self.enclosure:
-            self.enclosure.system_blink(3)
-            self.enclosure.mouth_text(result)
+        self.gui.show_text(result)
+        self.enclosure.system_blink(3)
+        self.enclosure.mouth_text(result)
 
     @intent_handler("fortune-teller.intent")
     def handle_fortune_teller(self, message: Message):  # pylint: disable=unused-argument
@@ -94,11 +85,9 @@ class RandomnessSkill(OVOSSkill):
             answer = Die("yes", "no").sample()
         self.speak_dialog("fortune-result", {"answer": answer})
         fortune_with_answer = f"{fortune}? ...{answer}"
-        if self.gui:
-            self.gui.show_text(fortune_with_answer)
-        if self.enclosure:
-            self.enclosure.eyes_spin()
-            self.enclosure.mouth_text(fortune_with_answer)
+        self.gui.show_text(fortune_with_answer)
+        self.enclosure.eyes_spin()
+        self.enclosure.mouth_text(fortune_with_answer)
 
     @intent_handler("roll-dice.intent")
     def handle_roll_dice(self, message: Message):
