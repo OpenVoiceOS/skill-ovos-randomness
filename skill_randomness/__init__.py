@@ -74,7 +74,7 @@ class RandomnessSkill(OVOSSkill):
     @intent_handler("roll-dice.intent")
     def handle_roll_dice(self, message: Message):
         """Roll a die."""
-        self.log.debug(f"Roll dice message: {message.serialize}")
+        self.log.debug(f"Roll dice message: {message.serialize()}")
         self.play_audio(f"{dirname(__file__)}/die-roll.wav")
         number = message.data.get("number", "1")
         faces = message.data.get("faces", "6")
