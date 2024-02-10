@@ -9,7 +9,7 @@ from ovos_workshop.decorators import intent_handler
 from ovos_workshop.skills import OVOSSkill
 
 
-class RandomnessSkill(OVOSSkill):  # TODO: Figure out why sounds aren't playing
+class RandomnessSkill(OVOSSkill):
     """A skill for all kinds of chance - make a choice, roll a die, flip a coin, etc."""
     def __init__(self, *args, bus=None, skill_id="", **kwargs):
         super().__init__(*args, bus=bus, skill_id=skill_id, **kwargs)
@@ -59,10 +59,10 @@ class RandomnessSkill(OVOSSkill):  # TODO: Figure out why sounds aren't playing
         result = randint(lower_bound, upper_bound)
         self.speak_dialog("number-result", data={"number": result})
         if self.gui:
-            self.gui.show_text(result)
+            self.gui.show_text(str(result))
         if self.enclosure:
             self.enclosure.eyes_look("left")
-            self.enclosure.mouth_text(result)
+            self.enclosure.mouth_text(str(result))
             self.enclosure.eyes_look("right")
 
     @intent_handler("flip-a-coin.intent")
@@ -80,7 +80,7 @@ class RandomnessSkill(OVOSSkill):  # TODO: Figure out why sounds aren't playing
     @intent_handler("fortune-teller.intent")
     def handle_fortune_teller(self, message: Message):  # pylint: disable=unused-argument
         """Get a random fortune."""
-        self.play_audio("magic.mp3", instant=True)
+        self.play_audio("magic.mp3")
         fortune = self.get_response("fortune-query")
         answer = Die(["yes", "no"]).sample()
         self.speak_dialog("fortune-result", {"answer": answer})
@@ -95,7 +95,7 @@ class RandomnessSkill(OVOSSkill):  # TODO: Figure out why sounds aren't playing
     def handle_roll_dice(self, message: Message):
         """Roll a die."""
         self.log.debug(f"Message: {message.serialize()}")
-        self.play_audio("die-roll.wav", instant=True)
+        self.play_audio("die-roll.wav")
         self.log.debug(f"Rolling a die with {message.data.get('number')}d{message.data.get('faces')}")
         number = message.data.get("number", "1")
         faces = message.data.get("faces", "6")
