@@ -1,0 +1,17 @@
+{
+    "skillMetadata": {
+        "sections": [
+            {
+                "name": "Randomness Skill settings",
+                "fields": [
+                    {
+                        "name": "die_limit",
+                        "type": "number",
+                        "label": "Max number of dice to roll at once",
+                        "value": 16
+                    }
+                ]
+            }
+        ]
+    }
+}
