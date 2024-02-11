@@ -1,15 +1,22 @@
 """A skill for all kinds of chance - make a choice, roll a die, flip a coin, etc."""
 from os.path import dirname
 from random import randint
+from typing import List
 
-from icepool import Die, d6, d
+from icepool import Die, d
+
 from ovos_bus_client.message import Message
 from ovos_workshop.decorators import intent_handler
+from lingua_franca.parse import extract_number
 from ovos_workshop.skills import OVOSSkill
-
 
 class RandomnessSkill(OVOSSkill):
     """A skill for all kinds of chance - make a choice, roll a die, flip a coin, etc."""
+
+    @property
+    def die_limit(self):
+        return self.settings.get("die_limit", 16)
+
     @intent_handler("make-a-choice.intent")
     def handle_make_a_choice_intent(self, message: Message):  # pylint: disable=unused-argument
         """Decide between two things."""
@@ -71,37 +78,30 @@ class RandomnessSkill(OVOSSkill):
         self.enclosure.eyes_spin()
         self.enclosure.mouth_text(fortune_with_answer)
 
-    @intent_handler("roll-dice.intent")
-    def handle_roll_dice(self, message: Message):
-        """Roll a die."""
-        self.log.debug(f"Roll dice message: {message.serialize()}")
+    @intent_handler("roll-single-die.intent")
+    def handle_roll_single_die(self, message: Message):
+        """Roll a single die."""
+        faces = extract_number(message.data.get("faces", "6"))
         self.play_audio(f"{dirname(__file__)}/die-roll.wav")
-        number = message.data.get("number", 1)
-        faces = message.data.get("faces", 6)
-        result = 0
-        if int(number) > 1:
-            self.log.debug(f"rolling {number} dice")
-            result_string = ""
-            for _ in range(1, int(number) + 1):
-                # Create a dialog string
-                r = Die(d(int(faces))).sample()
-                result += r
-                result_string = result_string + str(r) + ", "
-            result = result_string + f" for a total of {result}"
-        else:
-            result = Die(d(int(faces))).sample()
+        self.log.debug(f"Rolling a die with {faces} faces")
+        result = Die(d(int(faces))).sample()
         self.speak_dialog("die-result", data={"result": result})
         self.gui.show_text(str(result))
         self.enclosure.eyes_spin()
         self.enclosure.mouth_text(str(result))
 
-    @intent_handler("roll-common-dice.intent")
-    def handle_roll_common_dice(self, message: Message):
-        """Roll traditional six-sided dice."""
+    @intent_handler("roll-multiple-dice.intent")
+    def handle_roll_multiple_dice(self, message: Message):
+        """Roll multiple dice."""
+        number = extract_number(message.data.get("number"))
+        faces = extract_number(message.data.get("faces", "6"))
         self.play_audio(f"{dirname(__file__)}/die-roll.wav")
-        self.log.debug("Rolling a six-sided die")
-        result = d6.sample()
-        self.speak_dialog("die-result", data={"result": result})
-        self.gui.show_text(str(result))
-        self.enclosure.eyes_spin()
-        self.enclosure.mouth_text(str(result))
+        if number > self.die_limit:
+            self.speak_dialog("over-dice-limit", data={"number": die_limit})
+            number = die_limit
+        self.log.debug(f"Rolling {number} dice with {faces} faces")
+        result_list: List[int] = []
+        for _ in range(1, int(number) + 1):
+            val = Die(d(int(faces))).sample()
+            result_list.append(val)
+        self.speak_dialog("multiple-die-result", data={"result_string": ", ".join([str(x) for x in result_list]), "result_total": str(sum(result_list))})

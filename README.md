@@ -18,12 +18,15 @@ A skill for all kinds of chance - make a choice, roll a die, flip a coin, pick b
 - "Pick a number between 1 and 100"
 - "Roll a die"
 - "Roll 1 d 20"
-- "Roll 8 d 6"
+- "Roll 6 d 8"
 - "Roll a 20 sided die"
+- "Roll 5 dice"
+- "Roll 6, 8 sided dice"
 
 ## Credits
 
 - Mike Gray (@mikejgray)
+- BuilderJer (@builderjer)
 
 ## Category
 

@@ -11,8 +11,10 @@
         "Pick a number between 1 and 100",
         "Roll a die",
         "Roll 1 d 20",
-        "Roll 8 d 6",
-        "Roll a 20 sided die"
+        "Roll 6 d 8",
+        "Roll a 20 sided die",
+        "Roll 5 dice",
+        "Roll 6, 8 sided dice"
     ],
     "desktopFile": false,
     "warning": "",
@@ -20,6 +22,7 @@
     "requirements": {
         "python": [
             "icepool",
+            "ovos-lingua_franca",
             "ovos-utils",
             "ovos-workshop"
         ],
@@ -47,10 +50,8 @@
         "ovos skill games fun chance"
     ],
     "credits": [
-        "-",
-        "Mike",
-        "Gray",
-        "(@mikejgray)"
+        "- Mike Gray (@mikejgray)",
+        "- BuilderJer (@builderjer)"
     ],
     "skillname": "skill-randomness",
     "authorname": "mikejgray",
