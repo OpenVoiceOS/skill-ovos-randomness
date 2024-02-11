@@ -8,7 +8,7 @@ from ovos_workshop.decorators import intent_handler
 from lingua_franca.parse import extract_number
 from ovos_workshop.skills import OVOSSkill
 from ovos_utils import classproperty
-
+from ovos_utils.process_utils import RuntimeRequirements
 
 class RandomnessSkill(OVOSSkill):
     """A skill for all kinds of chance - make a choice, roll a die, flip a coin, etc."""
