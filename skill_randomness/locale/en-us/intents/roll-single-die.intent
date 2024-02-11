@@ -1,3 +1,4 @@
 roll a {faces} sided die
 roll a {faces} sided dice
-roll a die
+roll a dice
+roll (a| ) die

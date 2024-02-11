@@ -1,34 +1,23 @@
 """A skill for all kinds of chance - make a choice, roll a die, flip a coin, etc."""
 from os.path import dirname
 from random import randint
+from typing import List
 
 from icepool import Die, d
+
 from ovos_bus_client.message import Message
 from ovos_workshop.decorators import intent_handler
 from lingua_franca.parse import extract_number
 from ovos_workshop.skills import OVOSSkill
-from ovos_utils import classproperty
-from ovos_utils.process_utils import RuntimeRequirements
 
 class RandomnessSkill(OVOSSkill):
     """A skill for all kinds of chance - make a choice, roll a die, flip a coin, etc."""
     def __init__(self, *args, bus=None, skill_id='', **kwargs):
         super().__init__(*args, bus=bus, skill_id=skill_id, **kwargs)
 
-    @classproperty
-    def runtime_requirements(self):
-        """Define any runtime requirements for the skill. This skill is entirely local with optional GUI."""
-        return RuntimeRequirements(
-            internet_before_load=False,
-            network_before_load=False,
-            gui_before_load=False,
-            requires_internet=False,
-            requires_network=False,
-            requires_gui=False,
-            no_internet_fallback=True,
-            no_network_fallback=True,
-            no_gui_fallback=True,
-        )
+    @property
+    def die_limit(self):
+        return self.settings.get("die_limit", 16)
 
     @intent_handler("make-a-choice.intent")
     def handle_make_a_choice_intent(self, message: Message):  # pylint: disable=unused-argument
@@ -93,8 +82,7 @@ class RandomnessSkill(OVOSSkill):
 
     @intent_handler("roll-single-die.intent")
     def handle_roll_single_die(self, message: Message):
-        """Roll a die."""
-        # self.log.debug(f"Message: {message.serialize()}")
+        """Roll a single die."""
         faces = extract_number(message.data.get("faces", "6"))
         self.play_audio(f"{dirname(__file__)}/die-roll.wav")
         self.log.debug(f"Rolling a die with {faces} faces")
@@ -106,21 +94,16 @@ class RandomnessSkill(OVOSSkill):
 
     @intent_handler("roll-multiple-dice.intent")
     def handle_roll_multiple_dice(self, message: Message):
-        die_limit = self.settings.get("die_limit", 6)
+        """Roll multiple dice."""
         number = extract_number(message.data.get("number"))
         faces = extract_number(message.data.get("faces", "6"))
         self.play_audio(f"{dirname(__file__)}/die-roll.wav")
-        if number > die_limit:
+        if number > self.die_limit:
             self.speak_dialog("over-dice-limit", data={"number": die_limit})
             number = die_limit
         self.log.debug(f"Rolling {number} dice with {faces} faces")
-        result_string = ""
-        result_total = 0
+        result_list: List[int] = []
         for _ in range(1, int(number) + 1):
-            result = Die(d(int(faces))).sample()
-            result_total += result
-            if not result_string:
-                result_string = str(result)
-            else:
-                result_string = result_string + ", " + str(result)
-        self.speak_dialog("multiple-die-result", data={"result_string": result_string, "result_total": result_total})
+            val = Die(d(int(faces))).sample()
+            result_list.append(val)
+        self.speak_dialog("multiple-die-result", data={"result_string": ", ".join([str(x) for x in result_list]), "result_total": str(sum(result_list))})

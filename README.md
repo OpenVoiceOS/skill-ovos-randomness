@@ -26,7 +26,7 @@ A skill for all kinds of chance - make a choice, roll a die, flip a coin, pick b
 ## Credits
 
 - Mike Gray (@mikejgray)
-- BuilderJer (@buildrjer)
+- BuilderJer (@builderjer)
 
 ## Category
 

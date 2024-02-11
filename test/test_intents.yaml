@@ -32,14 +32,33 @@ en-us:
     - Tell me the fortune
   flip-a-coin.intent:
     - flip a coin
-  roll-dice.intent:
+  roll-single-die.intent:
     - roll a 20 sided die:
         - faces: "20"
     - roll a 20 sided dice:
         - faces: "20"
-    - roll 1d20:
-        - number: "1"
+    - roll a die:
+        - faces: "6"
+    - roll die:
+        - faces: "6"
+    - roll a dice:
+        - faces: "6"
+  roll-multiple-dice.intent:
+    - roll 6 d 20:
+        - number: "6"
         - faces: "20"
+    - roll 6 20 sided die:
+        - number: "6"
+        - faces: "20"
+    - roll 6 20 sided dice:
+        - number: "6"
+        - faces: "20"
+    - roll 6 die:
+        - number: "6"
+        - faces: "6"
+    - roll 6 dice:
+        - number: "6"
+        - faces: "6"
   make-a-choice.intent:
     - help me make a choice
     - help me decide something
