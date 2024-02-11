@@ -98,22 +98,6 @@ class RandomnessSkill(OVOSSkill):
         faces = extract_number(message.data.get("faces", "6"))
         self.play_audio(f"{dirname(__file__)}/die-roll.wav")
         self.log.debug(f"Rolling a die with {faces} faces")
-        # number = extract_number(message.data.get("number")) or 1
-        # if not number.isdigit() or not faces.isdigit():
-        #     self.speak_dialog("unclear-dice", {"guess": f"{number} d {faces}"})
-        #     if self.gui:
-        #         self.gui.show_text(f"I heard: {number}d{faces}")
-        #     return
-        # if int(number) > 1:
-        #     self.log.debug(f"rolling {number} dice")
-        #     result_string = ""
-        #     for _ in range(1, int(number) + 1):
-        #         # Create a dialog string
-        #         r = Die(d(int(faces))).sample()
-        #         result += r
-        #         result_string = result_string + ", " + str(r)
-        #     result = result_string + f" for a total of {result}"
-        # else:
         result = Die(d(int(faces))).sample()
         self.speak_dialog("die-result", data={"result": result})
         self.gui.show_text(str(result))
