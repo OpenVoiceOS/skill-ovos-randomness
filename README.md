@@ -4,9 +4,21 @@
 ![Python](https://img.shields.io/badge/python-3.10-blue.svg)
 ![Python](https://img.shields.io/badge/python-3.11-blue.svg)
 
+**Does not support Python 3.8 or lower, please use Python 3.9-3.11**
+
 ## About
 
 A skill for all kinds of chance - make a choice, roll a die, flip a coin, pick between two choices, etc.
+
+Accepts a single property: `die_limit`, which is the maximum number of dice that can be rolled at once. The default is 16.
+
+`~/.config/mycroft/skills/skill-randomness.openvoiceos/settings.json`
+
+```json
+{
+  "die_limit": 16
+}
+```
 
 ## Examples
 
@@ -14,13 +26,17 @@ A skill for all kinds of chance - make a choice, roll a die, flip a coin, pick b
 - "Tell me my future"
 - "Help me decide something"
 - "Pick a number between 1 and 100"
-- "Roll 1d20"
-- "Roll 8d6"
+- "Roll a die"
+- "Roll 1 d 20"
+- "Roll 6 d 8"
 - "Roll a 20 sided die"
+- "Roll 5 dice"
+- "Roll 6, 8 sided dice"
 
 ## Credits
 
 - Mike Gray (@mikejgray)
+- BuilderJer (@builderjer)
 
 ## Category
 

@@ -9,6 +9,8 @@ dialog:
   - second-choice
   - coin-result
   - number-range-not-specified
+  - die-result
+  - multiple-die-result
 intents:
   padatious:
     - fortune-teller.intent
@@ -16,6 +18,8 @@ intents:
     - roll-dice.intent
     - make-a-choice.intent
     - pick-a-number.intent
+    - roll-single-die.intent
+    - roll-multiple-dice.intent
   adapt: []
 vocab: []
 regex: []
