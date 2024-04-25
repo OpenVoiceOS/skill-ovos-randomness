@@ -28,7 +28,7 @@ class RandomnessSkill(OVOSSkill):
             result = Die(first_choice, second_choice).sample()
         self.speak_dialog("choice-result", data={"choice": result})
         self.gui.show_text(result)
-        self.enclosure.eyes_blink(2)
+        self.enclosure.eyes_blink("b")
         self.enclosure.mouth_text(result)
 
     @intent_handler("pick-a-number.intent")
