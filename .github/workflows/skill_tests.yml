@@ -11,11 +11,11 @@ jobs:
       contents: read
     uses: openvoiceos/.github/.github/workflows/python_build_tests.yml@feat/shared_actions1
     with:
-      python_matrix: '[3.9, "3.10", "3.11"]'
+      python_matrix: '["3.10", "3.11", "3.12"]'
   skill_unit_tests:
     name: skill_unit_tests
     permissions:
       contents: read
     uses: neongeckocom/.github/.github/workflows/skill_tests.yml@master
     with:
-      ovos_versions: '[3.9, "3.10", "3.11"]'
+      ovos_versions: '["3.10", "3.11", "3.12"]'
