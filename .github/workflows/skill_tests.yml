@@ -16,4 +16,4 @@ jobs:
       contents: read
     uses: neongeckocom/.github/.github/workflows/skill_tests.yml@master
     with:
-      ovos_versions: '["3.10", "3.11", "3.12"]'
+      ovos_versions: '["3.10", "3.11"]'
