@@ -31,4 +31,4 @@ jobs:
           pip install ".[test]"
       - name: Run Skill Tests
         run: |
-          python -m pytest tests/
+          python -m pytest test/
