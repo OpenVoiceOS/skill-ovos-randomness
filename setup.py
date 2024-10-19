@@ -78,5 +78,5 @@ setup(
     install_requires=get_requirements("requirements.txt"),
     keywords="ovos skill voice assistant",
     entry_points={"ovos.plugin.skill": PLUGIN_ENTRY_POINT},
-    extras={"test": get_requirements("requirements-dev.txt")},
+    extras_require={"test": get_requirements("requirements-dev.txt")},
 )
