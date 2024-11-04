@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.0.3a1](https://github.com/OpenVoiceOS/skill-ovos-randomness/tree/0.0.3a1) (2024-11-04)
+
+[Full Changelog](https://github.com/OpenVoiceOS/skill-ovos-randomness/compare/0.0.2a1...0.0.3a1)
+
+**Merged pull requests:**
+
+- fix: standard naming for PyPi [\#14](https://github.com/OpenVoiceOS/skill-ovos-randomness/pull/14) ([mikejgray](https://github.com/mikejgray))
+
 ## [0.0.2a1](https://github.com/OpenVoiceOS/skill-ovos-randomness/tree/0.0.2a1) (2024-11-04)
 
 [Full Changelog](https://github.com/OpenVoiceOS/skill-ovos-randomness/compare/0.0.1...0.0.2a1)
