@@ -3,9 +3,9 @@ from setuptools import setup
 from os import walk, path
 
 BASEDIR = path.abspath(path.dirname(__file__))
-URL = "https://github.com/mikejgray/skill-randomness"
+URL = "https://github.com/openvoiceos/skill-ovos-randomness"
 SKILL_CLAZZ = "RandomnessSkill"  # needs to match __init__.py class name
-PYPI_NAME = "skill-randomness"  # pip install PYPI_NAME
+PYPI_NAME = "ovos-skill-randomness"  # pip install PYPI_NAME
 
 # below derived from github url to ensure standard skill_id
 SKILL_AUTHOR, SKILL_NAME = URL.split(".com/")[-1].split("/")
@@ -68,8 +68,8 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url=URL,
-    author="Mike Gray",
-    author_email="mike@graywind.org",
+    author="OpenVoiceOS",
+    author_email="mike@oscillatelabs.net",
     license="MIT",
     package_dir={SKILL_PKG: "skill_randomness"},
     package_data={SKILL_PKG: find_resource_files()},
