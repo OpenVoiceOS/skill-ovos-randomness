@@ -1,7 +1,7 @@
 name: Test Resources
 on:
   workflow_dispatch:
-  push:
+  # push:
 
 jobs:
   test-intents:
