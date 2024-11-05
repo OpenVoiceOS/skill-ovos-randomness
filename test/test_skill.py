@@ -12,7 +12,7 @@ from skill_randomness import RandomnessSkill
 
 
 @pytest.fixture(scope="session")
-def test_skill(test_skill_id="skill-randomness.mikejgray", bus=FakeBus()):
+def test_skill(test_skill_id="skill-ovos-randomness.openvoiceos", bus=FakeBus()):
     # Get test skill
     bus.emitter = bus.ee
     bus.run_forever()
@@ -55,7 +55,7 @@ class TestRandomnessSkill:
         assert True
 
 def test_skill_is_a_valid_plugin():
-    assert "skill-randomness.mikejgray" in find_skill_plugins()
+    assert "skill-ovos-randomness.openvoiceos" in find_skill_plugins()
 
 if __name__ == "__main__":
     pytest.main()

@@ -28,7 +28,7 @@ class RandomnessSkill(OVOSSkill):
             result = Die(first_choice, second_choice).sample()
         self.speak_dialog("choice-result", data={"choice": result})
         self.gui.show_text(result)
-        self.enclosure.eyes_blink(2)
+        self.enclosure.eyes_blink("b")
         self.enclosure.mouth_text(result)
 
     @intent_handler("pick-a-number.intent")
@@ -81,7 +81,7 @@ class RandomnessSkill(OVOSSkill):
     @intent_handler("roll-single-die.intent")
     def handle_roll_single_die(self, message: Message):
         """Roll a single die."""
-        faces = extract_number(message.data.get("faces", "6"))
+        faces = extract_number(message.data.get("faces", "6"), lang=self.lang)
         self.play_audio(f"{dirname(__file__)}/die-roll.wav")
         self.log.debug(f"Rolling a die with {faces} faces")
         result = Die(d(int(faces))).sample()
@@ -93,8 +93,8 @@ class RandomnessSkill(OVOSSkill):
     @intent_handler("roll-multiple-dice.intent")
     def handle_roll_multiple_dice(self, message: Message):
         """Roll multiple dice."""
-        number = extract_number(message.data.get("number"))
-        faces = extract_number(message.data.get("faces", "6"))
+        number = extract_number(message.data.get("number"), lang=self.lang)
+        faces = extract_number(message.data.get("faces", "6"), lang=self.lang)
         self.play_audio(f"{dirname(__file__)}/die-roll.wav")
         if number > self.die_limit:
             self.speak_dialog("over-dice-limit", data={"number": self.die_limit})
