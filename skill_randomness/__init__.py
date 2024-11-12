@@ -7,8 +7,9 @@ from icepool import Die, d
 
 from ovos_bus_client.message import Message
 from ovos_workshop.decorators import intent_handler
-from lingua_franca.parse import extract_number
+from ovos_number_parser import extract_number
 from ovos_workshop.skills import OVOSSkill
+
 
 class RandomnessSkill(OVOSSkill):
     """A skill for all kinds of chance - make a choice, roll a die, flip a coin, etc."""
